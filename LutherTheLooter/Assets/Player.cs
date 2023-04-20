@@ -5,8 +5,9 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     Animator animator;
-    [SerializeField] bool left, right, space;
-    [SerializeField] float speed;
+    [SerializeField] bool left, right, space, up, down;
+    [SerializeField] float xSpeed, ySpeed;
+    [SerializeField] bool touchingLadder;
     // Start is called before the first frame update
     void Start()
     {
@@ -40,11 +41,38 @@ public class Player : MonoBehaviour
         {
             space = false;
         }
+        if(Input.GetKeyDown(KeyCode.W))
+        {
+            up = true;
+        }
+        if(Input.GetKeyDown(KeyCode.S))
+        {
+            down = true;
+        }
+        if (Input.GetKeyUp(KeyCode.W))
+        {
+            up = false;
+        }
+        if (Input.GetKeyUp(KeyCode.S))
+        {
+            down = false;
+        }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log(collision.gameObject.tag);
+        if (collision.gameObject.tag == "ladder")
+        {
+            touchingLadder = true;
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "ladder")
+        {
+            touchingLadder = false;
+        }
     }
     private void FixedUpdate()
     {
@@ -55,7 +83,7 @@ public class Player : MonoBehaviour
             {
                 animator.speed = 0;
             }
-            transform.position = new Vector2(transform.position.x + speed*Time.deltaTime, transform.position.y);
+            transform.position = new Vector2(transform.position.x + xSpeed*Time.deltaTime, transform.position.y);
             animator.SetBool("run", true);
             GetComponent<SpriteRenderer>().flipX = false;
             
@@ -67,7 +95,7 @@ public class Player : MonoBehaviour
             {
                 animator.speed = 0;
             }
-            transform.position = new Vector2(transform.position.x - speed*Time.deltaTime, transform.position.y);
+            transform.position = new Vector2(transform.position.x - xSpeed*Time.deltaTime, transform.position.y);
             animator.SetBool("run", true);
             GetComponent<SpriteRenderer>().flipX = true;
         }
@@ -85,6 +113,22 @@ public class Player : MonoBehaviour
         } else
         {
             animator.SetBool("bat", false);
+        }
+        if(up && touchingLadder)
+        {
+            animator.SetBool("land", true);
+            transform.position = new Vector2(transform.position.x, Mathf.Abs(ySpeed) * Time.deltaTime + transform.position.y);
+
+        }
+        else if(down&&touchingLadder)
+        {
+            animator.SetBool("land", true);
+            transform.position = new Vector2(transform.position.x, -1*Mathf.Abs(ySpeed) * Time.deltaTime+ transform.position.y);
+
+        }
+        else
+        {
+            animator.SetBool("land", false);
         }
 
 
