@@ -21,10 +21,10 @@ public class DefaultEnemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector2 newLoc = Vector2.MoveTowards(transition.position, waypoints[index].position, .3f);
+        Vector2 newLoc = Vector2.MoveTowards(transform.position, waypoints[index].position, .3f);
         transform.position = newLoc;
 
-        if (MathF.Abs(transform.position.x - waypoints[index].position.x) < .01f && Mathf.Abs(transform.position.y- waypoints[index].position.y)< .01f)
+        if (Mathf.Abs(transform.position.x - waypoints[index].position.x) < .01f && Mathf.Abs(transform.position.y- waypoints[index].position.y)< .01f)
         {
             index = (index + 1) % waypoints.Count;
         }
