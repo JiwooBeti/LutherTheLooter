@@ -8,10 +8,13 @@ public class Player : MonoBehaviour
     [SerializeField] bool left, right, space, up, down;
     [SerializeField] float xSpeed, ySpeed;
     [SerializeField] bool touchingLadder;
+    [SerializeField] GameObject touchedDoor;
+    [SerializeField] bool upKey;
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
+        touchedDoor = null;
     }
 
     // Update is called once per frame
@@ -57,6 +60,14 @@ public class Player : MonoBehaviour
         {
             down = false;
         }
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            upKey = true;
+        }
+        if (Input.GetKeyUp(KeyCode.UpArrow))
+        {
+            upKey = false;
+        }
     }
 
 
@@ -66,17 +77,52 @@ public class Player : MonoBehaviour
         {
             touchingLadder = true;
         }
+        if (collision.gameObject.tag == "Door")
+        {
+            touchedDoor = collision.gameObject;
+        }
+
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "ladder")
         {
             touchingLadder = false;
+
+            float newY = transform.position.y;
+
+            if(transform.position.y>-8.06)
+            {
+               newY = -7.46f;
+            }
+            else if(transform.position.y<-20.7)
+            {
+                newY = -21.92f;
+            } else if(transform.position.y<-15.8)
+            {
+                newY = -17.32f;
+            } else if(transform.position.y>-13.38)
+            {
+                newY = -12.35f;
+            }
+            transform.position=new Vector2(transform.position.x, newY);
         }
+        if (collision.gameObject.tag == "Door")
+        {
+            touchedDoor = null;
+        }
+
     }
     private void FixedUpdate()
     {
+
         animator.speed = 1;
+        if(up&&touchedDoor!=null)
+        {
+
+            transform.position = new Vector2(touchedDoor.GetComponent<Door>().getDestX(), touchedDoor.GetComponent<Door>().getDestY());
+
+        }
         if(right)
         {
             if(!animator.GetBool("run"))
