@@ -1005,7 +1005,7 @@ MonoBehaviour:
   up: 0
   down: 0
   xSpeed: 5
-  ySpeed: 15
+  ySpeed: 5
   touchingLadder: 0
   touchedDoor: {fileID: 0}
   upKey: 0
@@ -1224,7 +1224,7 @@ GameObject:
   - component: {fileID: 615515655}
   - component: {fileID: 615515654}
   m_Layer: 0
-  m_Name: Square
+  m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1316,8 +1316,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 615515653}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.28, y: -19.2, z: 0}
-  m_LocalScale: {x: 34, y: 0.3, z: 1}
+  m_LocalPosition: {x: -2.32, y: -24.04, z: 0}
+  m_LocalScale: {x: 40, y: 0.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}

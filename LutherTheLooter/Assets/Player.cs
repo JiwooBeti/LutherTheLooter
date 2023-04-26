@@ -5,11 +5,12 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     Animator animator;
-    [SerializeField] bool left, right, space, up, down;
+    [SerializeField] bool left, right, space, up, down, escalatorButton;
     [SerializeField] float xSpeed, ySpeed;
     [SerializeField] bool touchingLadder;
     [SerializeField] GameObject touchedDoor;
     [SerializeField] bool upKey;
+    [SerializeField] GameObject touchedEscalator;
     // Start is called before the first frame update
     void Start()
     {
@@ -68,6 +69,15 @@ public class Player : MonoBehaviour
         {
             upKey = false;
         }
+        if(Input.GetKeyDown(KeyCode.Q))
+        {
+            escalatorButton = true;
+        }
+        if (Input.GetKeyUp(KeyCode.Q))
+        {
+            escalatorButton = false;
+        }
+
     }
 
 
@@ -81,7 +91,10 @@ public class Player : MonoBehaviour
         {
             touchedDoor = collision.gameObject;
         }
-
+        if(collision.gameObject.tag=="Escalator")
+        {
+            touchedEscalator = collision.gameObject;
+        }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
@@ -110,6 +123,10 @@ public class Player : MonoBehaviour
         if (collision.gameObject.tag == "Door")
         {
             touchedDoor = null;
+        }
+        if (collision.gameObject.tag == "Escalator")
+        {
+            touchedEscalator = null;
         }
 
     }
@@ -175,6 +192,12 @@ public class Player : MonoBehaviour
         else
         {
             animator.SetBool("land", false);
+        }
+
+        if(escalatorButton&&touchedEscalator!=null)
+        {
+            transform.position = new Vector2(transform.position.x, touchedEscalator.GetComponent<Escalator>().getY());
+            escalatorButton = false;
         }
 
 
