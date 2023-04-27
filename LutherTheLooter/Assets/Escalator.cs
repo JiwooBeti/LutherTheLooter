@@ -5,7 +5,7 @@ using UnityEngine;
 public class Escalator : MonoBehaviour
 {
     // Start is called before the first frame update
-    [SerializeField] float x, y;
+    [SerializeField] float y;
     void Start()
     {
         
@@ -16,10 +16,7 @@ public class Escalator : MonoBehaviour
     {
         
     }
-    public float getX()
-    {
-        return x;
-    }
+
     public float getY()
     {
         return y;

@@ -8,6 +8,7 @@ TagManager:
   - ladder
   - door
   - Escalator
+  - Elevator
   layers:
   - Default
   - TransparentFX

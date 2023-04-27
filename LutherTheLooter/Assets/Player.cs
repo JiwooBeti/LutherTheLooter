@@ -5,12 +5,14 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     Animator animator;
-    [SerializeField] bool left, right, space, up, down, escalatorButton;
+    [SerializeField] bool left, right, space, up, down, escalatorButton, elevatorButton;
     [SerializeField] float xSpeed, ySpeed;
     [SerializeField] bool touchingLadder;
     [SerializeField] GameObject touchedDoor;
     [SerializeField] bool upKey;
-    [SerializeField] GameObject touchedEscalator;
+    [SerializeField] GameObject touchedEscalator=null, touchedElevator=null;
+    [SerializeField] bool onElevator = false;
+    [SerializeField] bool onEscalator = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -77,7 +79,14 @@ public class Player : MonoBehaviour
         {
             escalatorButton = false;
         }
-
+        if(Input.GetKeyDown(KeyCode.E))
+        {
+            elevatorButton = true;
+        }
+        if(Input.GetKeyUp(KeyCode.E))
+        {
+            elevatorButton = false;
+        }
     }
 
 
@@ -94,6 +103,10 @@ public class Player : MonoBehaviour
         if(collision.gameObject.tag=="Escalator")
         {
             touchedEscalator = collision.gameObject;
+        }
+        if (collision.gameObject.tag == "Elevator")
+        {
+            touchedElevator = collision.gameObject;
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
@@ -128,7 +141,10 @@ public class Player : MonoBehaviour
         {
             touchedEscalator = null;
         }
-
+        if (collision.gameObject.tag == "Elevator")
+        {
+            touchedElevator = null;
+        }
     }
     private void FixedUpdate()
     {
@@ -194,12 +210,32 @@ public class Player : MonoBehaviour
             animator.SetBool("land", false);
         }
 
-        if(escalatorButton&&touchedEscalator!=null)
+        if(escalatorButton&&touchedEscalator!=null&&!onEscalator)
         {
+            GetComponent<SpriteRenderer>().enabled = false;
             transform.position = new Vector2(transform.position.x, touchedEscalator.GetComponent<Escalator>().getY());
+            onEscalator = true;
             escalatorButton = false;
+            Invoke("showPlayer", 0.5f);
         }
+
+        if(elevatorButton&&touchedElevator!=null&&!onElevator)
+        {
+            GetComponent<SpriteRenderer>().enabled = false;
+            transform.position = new Vector2(transform.position.x, touchedElevator.GetComponent<Escalator>().getY());
+            onElevator = true;
+            elevatorButton = false;
+            Invoke("showPlayer", 1.5f) ;
+        }
+        
 
 
         }
+        
+    void showPlayer()
+    {
+        onElevator = false;
+        onEscalator = false;
+        GetComponent<SpriteRenderer>().enabled = true;
     }
+}
