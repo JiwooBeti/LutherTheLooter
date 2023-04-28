@@ -9,6 +9,7 @@ TagManager:
   - door
   - Escalator
   - Elevator
+  - Furniture
   layers:
   - Default
   - TransparentFX
