@@ -1620,6 +1620,17 @@ MonoBehaviour:
   onEscalator: 0
   text: {fileID: 411346067}
   bigPaper: {fileID: 1889161696}
+  oneDown: 0
+  twoDown: 0
+  threeDown: 0
+  fourDown: 0
+  fiveDown: 0
+  sixDown: 0
+  sevenDown: 0
+  eightDown: 0
+  nineDown: 0
+  zeroDown: 0
+  inputCode: 
 --- !u!61 &406949540
 BoxCollider2D:
   m_ObjectHideFlags: 0

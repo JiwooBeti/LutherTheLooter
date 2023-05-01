@@ -16,6 +16,8 @@ public class Player : MonoBehaviour
     [SerializeField] bool onEscalator = false;
     [SerializeField] Text text;
     [SerializeField] GameObject bigPaper;
+    [SerializeField] bool oneDown, twoDown, threeDown, fourDown, fiveDown, sixDown, sevenDown, eightDown, nineDown, zeroDown;
+    [SerializeField] string inputCode = "";
 
     // Start is called before the first frame update
     void Start()
@@ -273,5 +275,40 @@ public class Player : MonoBehaviour
         onElevator = false;
         onEscalator = false;
         GetComponent<SpriteRenderer>().enabled = true;
+    }
+
+    void GatherNums()
+    {
+        if(!oneDown&&Input.GetKeyDown(KeyCode.Alpha1))
+        {oneDown = true;}
+        if (!twoDown && Input.GetKeyDown(KeyCode.Alpha2))
+        {twoDown = true;}
+        if (!threeDown && Input.GetKeyDown(KeyCode.Alpha3))
+        {threeDown = true;}
+        if (!fourDown && Input.GetKeyDown(KeyCode.Alpha4))
+        {fourDown = true;}
+        if (!fiveDown && Input.GetKeyDown(KeyCode.Alpha5))
+        {fiveDown = true;}
+        if (!sixDown && Input.GetKeyDown(KeyCode.Alpha6))
+        {sixDown = true;}
+        if (!sevenDown && Input.GetKeyDown(KeyCode.Alpha7))
+        {sevenDown = true;}
+        if (!eightDown && Input.GetKeyDown(KeyCode.Alpha8))
+        {eightDown = true;}
+        if (!nineDown && Input.GetKeyDown(KeyCode.Alpha9))
+        {nineDown = true;}
+        if (!zeroDown && Input.GetKeyDown(KeyCode.Alpha0))
+        {zeroDown = true;}
+        if (Input.GetKeyUp(KeyCode.Alpha1)) { oneDown = false; }
+        if (Input.GetKeyUp(KeyCode.Alpha2)) { twoDown = false; }
+        if (Input.GetKeyUp(KeyCode.Alpha3)) { threeDown = false; }
+        if (Input.GetKeyUp(KeyCode.Alpha4)) { fourDown = false; }
+        if (Input.GetKeyUp(KeyCode.Alpha5)) { fiveDown = false; }
+        if (Input.GetKeyUp(KeyCode.Alpha6)) { sixDown = false; }
+        if (Input.GetKeyUp(KeyCode.Alpha7)) { sevenDown = false; }
+        if (Input.GetKeyUp(KeyCode.Alpha8)) { eightDown = false; }
+        if (Input.GetKeyUp(KeyCode.Alpha9)) { nineDown = false; }
+        if (Input.GetKeyUp(KeyCode.Alpha0)) { zeroDown = false; }
+
     }
 }
