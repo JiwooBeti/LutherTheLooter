@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
     Animator animator;
-    [SerializeField] bool left, right, space, up, down, escalatorButton, elevatorButton;
+    [SerializeField] bool left, right, space, up, down, escalatorButton, elevatorButton, paperButton;
     [SerializeField] float xSpeed, ySpeed;
     [SerializeField] bool touchingLadder;
     [SerializeField] GameObject touchedDoor;
@@ -13,6 +14,9 @@ public class Player : MonoBehaviour
     [SerializeField] GameObject touchedEscalator=null, touchedElevator=null;
     [SerializeField] bool onElevator = false;
     [SerializeField] bool onEscalator = false;
+    [SerializeField] Text text;
+    [SerializeField] GameObject bigPaper;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -73,7 +77,7 @@ public class Player : MonoBehaviour
         }
         if(Input.GetKeyDown(KeyCode.Q))
         {
-            escalatorButton = true;
+                escalatorButton = true;
         }
         if (Input.GetKeyUp(KeyCode.Q))
         {
@@ -86,6 +90,14 @@ public class Player : MonoBehaviour
         if(Input.GetKeyUp(KeyCode.E))
         {
             elevatorButton = false;
+        }
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            paperButton = true;
+        }
+        if (Input.GetKeyUp(KeyCode.P))
+        {
+            paperButton = false;
         }
     }
 
@@ -107,6 +119,10 @@ public class Player : MonoBehaviour
         if (collision.gameObject.tag == "Elevator")
         {
             touchedElevator = collision.gameObject;
+        }
+        if(collision.gameObject.tag=="Paper")
+        {
+            text.text="Code: "+collision.gameObject.GetComponent<Paper>().getText();
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
@@ -145,12 +161,45 @@ public class Player : MonoBehaviour
         {
             touchedElevator = null;
         }
+        if(collision.gameObject.tag=="Paper")
+        {
+            text.text = "";
+        }
     }
     private void FixedUpdate()
     {
 
         animator.speed = 1;
-        if(up&&touchedDoor!=null)
+        if(!paperButton&&text.text.Equals("")&&paperButton)
+        {
+            bigPaper.SetActive(true);
+            text.enabled = true;
+            return;
+        } else
+        {
+            Debug.Log("should not see papers");
+            bigPaper.SetActive(false);
+            text.enabled = false;
+        }
+        if (up && touchingLadder)
+        {
+            animator.SetBool("land", true);
+            transform.position = new Vector2(transform.position.x, Mathf.Abs(ySpeed) * Time.deltaTime + transform.position.y);
+            return;
+
+        }
+        else if (down && touchingLadder)
+        {
+            animator.SetBool("land", true);
+            transform.position = new Vector2(transform.position.x, -1 * Mathf.Abs(ySpeed) * Time.deltaTime + transform.position.y);
+            return;
+
+        }
+        else
+        {
+            animator.SetBool("land", false);
+        }
+        if (up&&touchedDoor!=null)
         {
 
             transform.position = new Vector2(touchedDoor.GetComponent<Door>().getDestX(), touchedDoor.GetComponent<Door>().getDestY());
@@ -193,22 +242,7 @@ public class Player : MonoBehaviour
         {
             animator.SetBool("bat", false);
         }
-        if(up && touchingLadder)
-        {
-            animator.SetBool("land", true);
-            transform.position = new Vector2(transform.position.x, Mathf.Abs(ySpeed) * Time.deltaTime + transform.position.y);
-
-        }
-        else if(down&&touchingLadder)
-        {
-            animator.SetBool("land", true);
-            transform.position = new Vector2(transform.position.x, -1*Mathf.Abs(ySpeed) * Time.deltaTime+ transform.position.y);
-
-        }
-        else
-        {
-            animator.SetBool("land", false);
-        }
+        
 
         if(escalatorButton&&touchedEscalator!=null&&!onEscalator)
         {

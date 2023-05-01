@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,14 +6,19 @@ using UnityEngine;
 public class Paper : MonoBehaviour
 {
     // Start is called before the first frame update
+    [SerializeField] String text;
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
+    }
+    public String getText()
+    {
+        return text;
     }
 }
