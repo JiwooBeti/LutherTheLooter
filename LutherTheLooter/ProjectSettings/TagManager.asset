@@ -10,6 +10,7 @@ TagManager:
   - Escalator
   - Elevator
   - Furniture
+  - door_Code
   layers:
   - Default
   - TransparentFX
