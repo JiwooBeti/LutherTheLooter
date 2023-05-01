@@ -11,6 +11,7 @@ TagManager:
   - Elevator
   - Furniture
   - door_Code
+  - Paper
   layers:
   - Default
   - TransparentFX

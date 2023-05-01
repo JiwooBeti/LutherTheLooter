@@ -22,6 +22,7 @@ public class Player : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         touchedDoor = null;
+        text.text = "";
     }
 
     // Update is called once per frame
@@ -122,7 +123,8 @@ public class Player : MonoBehaviour
         }
         if(collision.gameObject.tag=="Paper")
         {
-            text.text="Code: "+collision.gameObject.GetComponent<Paper>().getText();
+            text.text="Door Code: "+collision.gameObject.GetComponent<Paper>().getText();
+            //Debug.Log("New Text: " + text.text);
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
@@ -170,14 +172,14 @@ public class Player : MonoBehaviour
     {
 
         animator.speed = 1;
-        if(!paperButton&&text.text.Equals("")&&paperButton)
+        if(!text.text.Equals("")&&paperButton)
         {
             bigPaper.SetActive(true);
             text.enabled = true;
             return;
         } else
         {
-            Debug.Log("should not see papers");
+            //Debug.Log("should not see papers");
             bigPaper.SetActive(false);
             text.enabled = false;
         }
