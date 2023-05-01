@@ -12,6 +12,7 @@ TagManager:
   - Furniture
   - door_Code
   - Paper
+  - Computer
   layers:
   - Default
   - TransparentFX
