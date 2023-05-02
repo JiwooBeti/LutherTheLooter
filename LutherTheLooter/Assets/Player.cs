@@ -6,18 +6,19 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour
 {
     Animator animator;
-    [SerializeField] bool left, right, space, up, down, escalatorButton, elevatorButton, paperButton;
+    [SerializeField] bool left, right, space, up, down, escalatorButton, elevatorButton, paperButton, computerButton;
     [SerializeField] float xSpeed, ySpeed;
     [SerializeField] bool touchingLadder;
     [SerializeField] GameObject touchedDoor;
     [SerializeField] bool upKey;
-    [SerializeField] GameObject touchedEscalator=null, touchedElevator=null;
+    [SerializeField] GameObject touchedEscalator = null, touchedElevator = null, touchedComputer = null;
     [SerializeField] bool onElevator = false;
     [SerializeField] bool onEscalator = false;
     [SerializeField] Text text;
     [SerializeField] GameObject bigPaper;
     [SerializeField] bool oneDown, twoDown, threeDown, fourDown, fiveDown, sixDown, sevenDown, eightDown, nineDown, zeroDown;
     [SerializeField] string inputCode = "";
+    [SerializeField] bool touchingCPU;
 
     // Start is called before the first frame update
     void Start()
@@ -102,6 +103,19 @@ public class Player : MonoBehaviour
         {
             paperButton = false;
         }
+        if(Input.GetKeyDown(KeyCode.C))
+        {
+            computerButton = true;
+        }
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            computerButton = false;
+        }
+        if (touchingCPU && computerButton)
+        {
+            GatherNums();
+        }
+
     }
 
 
@@ -128,6 +142,12 @@ public class Player : MonoBehaviour
             text.text="Door Code: "+collision.gameObject.GetComponent<Paper>().getText();
             //Debug.Log("New Text: " + text.text);
         }
+        if(collision.gameObject.tag=="Computer")
+        {
+            touchedComputer= collision.gameObject;  
+            touchingCPU = true;
+            text.text = "Enter Door Code: ";
+        }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
@@ -137,21 +157,21 @@ public class Player : MonoBehaviour
 
             float newY = transform.position.y;
 
-            if(transform.position.y>-8.06)
+            if (transform.position.y > -8.06)
             {
-               newY = -7.46f;
+                newY = -7.46f;
             }
-            else if(transform.position.y<-20.7)
+            else if (transform.position.y < -20.7)
             {
                 newY = -21.92f;
-            } else if(transform.position.y<-15.8)
+            } else if (transform.position.y < -15.8)
             {
                 newY = -17.32f;
-            } else if(transform.position.y>-13.38)
+            } else if (transform.position.y > -13.38)
             {
                 newY = -12.35f;
             }
-            transform.position=new Vector2(transform.position.x, newY);
+            transform.position = new Vector2(transform.position.x, newY);
         }
         if (collision.gameObject.tag == "Door")
         {
@@ -165,16 +185,29 @@ public class Player : MonoBehaviour
         {
             touchedElevator = null;
         }
-        if(collision.gameObject.tag=="Paper")
+        if (collision.gameObject.tag == "Paper")
         {
             text.text = "";
+        }
+        if (collision.gameObject.tag == "Computer")
+        {
+            touchedComputer = null;
+            text.text = "";
+            touchingCPU = false;
+            inputCode = "";
         }
     }
     private void FixedUpdate()
     {
 
         animator.speed = 1;
-        if(!text.text.Equals("")&&paperButton)
+        if(touchingCPU&&computerButton)
+        {
+            bigPaper.SetActive(true);
+            text.enabled = true;
+            return;
+        }
+        else if(!text.text.Equals("")&&paperButton)
         {
             bigPaper.SetActive(true);
             text.enabled = true;
@@ -279,26 +312,32 @@ public class Player : MonoBehaviour
 
     void GatherNums()
     {
-        if(!oneDown&&Input.GetKeyDown(KeyCode.Alpha1))
-        {oneDown = true;}
-        if (!twoDown && Input.GetKeyDown(KeyCode.Alpha2))
-        {twoDown = true;}
-        if (!threeDown && Input.GetKeyDown(KeyCode.Alpha3))
-        {threeDown = true;}
-        if (!fourDown && Input.GetKeyDown(KeyCode.Alpha4))
-        {fourDown = true;}
-        if (!fiveDown && Input.GetKeyDown(KeyCode.Alpha5))
-        {fiveDown = true;}
-        if (!sixDown && Input.GetKeyDown(KeyCode.Alpha6))
-        {sixDown = true;}
-        if (!sevenDown && Input.GetKeyDown(KeyCode.Alpha7))
-        {sevenDown = true;}
-        if (!eightDown && Input.GetKeyDown(KeyCode.Alpha8))
-        {eightDown = true;}
-        if (!nineDown && Input.GetKeyDown(KeyCode.Alpha9))
-        {nineDown = true;}
-        if (!zeroDown && Input.GetKeyDown(KeyCode.Alpha0))
-        {zeroDown = true;}
+        if(inputCode.Length>=4)
+        {
+            //call the computer to check if the two strings are equal
+            string s = touchedComputer.GetComponent<Computer>().GetPaper().GetComponent<Paper>().getText();
+            //if equal the computer runs the method to make a locked door unlocked
+            Debug.Log(s + " : " + inputCode);
+            if(inputCode.Equals(s))
+            {
+                touchedComputer.GetComponent<Computer>().Unlock();
+                inputCode = "";
+            } else
+            {
+                inputCode = "";
+            }
+            return;
+        }
+        if(!oneDown&&Input.GetKeyDown(KeyCode.Alpha1)){oneDown = true;inputCode += 1; }
+        if (!twoDown && Input.GetKeyDown(KeyCode.Alpha2)){twoDown = true;inputCode += 2; }
+        if (!threeDown && Input.GetKeyDown(KeyCode.Alpha3)){threeDown = true; inputCode += 3; }
+        if (!fourDown && Input.GetKeyDown(KeyCode.Alpha4)){fourDown = true; inputCode += 4; }
+        if (!fiveDown && Input.GetKeyDown(KeyCode.Alpha5)){fiveDown = true; inputCode += 5; }
+        if (!sixDown && Input.GetKeyDown(KeyCode.Alpha6)){sixDown = true; inputCode += 6; }
+        if (!sevenDown && Input.GetKeyDown(KeyCode.Alpha7)){sevenDown = true; inputCode += 7; }
+        if (!eightDown && Input.GetKeyDown(KeyCode.Alpha8)){eightDown = true; inputCode += 8; }
+        if (!nineDown && Input.GetKeyDown(KeyCode.Alpha9)){nineDown = true; inputCode += 9; }
+        if (!zeroDown && Input.GetKeyDown(KeyCode.Alpha0)){zeroDown = true; inputCode += 0; }
         if (Input.GetKeyUp(KeyCode.Alpha1)) { oneDown = false; }
         if (Input.GetKeyUp(KeyCode.Alpha2)) { twoDown = false; }
         if (Input.GetKeyUp(KeyCode.Alpha3)) { threeDown = false; }
@@ -309,6 +348,19 @@ public class Player : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Alpha8)) { eightDown = false; }
         if (Input.GetKeyUp(KeyCode.Alpha9)) { nineDown = false; }
         if (Input.GetKeyUp(KeyCode.Alpha0)) { zeroDown = false; }
+
+        /*if (oneDown) { inputCode += 1; }
+        if (twoDown) { inputCode += 2; }
+        if (threeDown) { inputCode += 3; }
+        if (fourDown) { inputCode += 4; }
+        if (fiveDown) { inputCode += 5; }
+        if (sixDown) { inputCode += 6; }
+        if (sevenDown) { inputCode += 7; }
+        if (eightDown) { inputCode += 8; }
+        if (nineDown) { inputCode += 9; }
+        if (zeroDown) { inputCode += 0; }*/
+        text.text = "Enter Door Code: " + inputCode;
+
 
     }
 }
