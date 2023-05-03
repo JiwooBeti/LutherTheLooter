@@ -6,6 +6,7 @@ public class Furniture : MonoBehaviour
 {
     public bool used;
     [SerializeField] int value;
+    public int id;
     // Start is called before the first frame update
     void Start()
     {

@@ -401,6 +401,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   used: 0
   value: 1
+  id: 6
 --- !u!1 &92678791
 GameObject:
   m_ObjectHideFlags: 0
@@ -1561,6 +1562,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   used: 0
   value: 1
+  id: 9
 --- !u!1 &358141765
 GameObject:
   m_ObjectHideFlags: 0
@@ -2114,6 +2116,7 @@ MonoBehaviour:
   touchingCPU: 0
   touchingLocked: 0
   score: 0
+  id: -1
 --- !u!61 &406949540
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2127,7 +2130,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.1274867, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -2138,7 +2141,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 4.88, y: 6.94}
+  m_Size: {x: 4.242566, y: 6.94}
   m_EdgeRadius: 0
 --- !u!50 &406949541
 Rigidbody2D:
@@ -2367,6 +2370,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   used: 0
   value: 1
+  id: 1
 --- !u!1 &425535076
 GameObject:
   m_ObjectHideFlags: 0
@@ -2493,6 +2497,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   used: 0
   value: 1
+  id: 11
 --- !u!1 &429637288
 GameObject:
   m_ObjectHideFlags: 0
@@ -2744,6 +2749,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   used: 0
   value: 1
+  id: 21
 --- !u!1 &483604492
 GameObject:
   m_ObjectHideFlags: 0
@@ -2870,6 +2876,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   used: 0
   value: 1
+  id: 16
 --- !u!1 &495094906
 GameObject:
   m_ObjectHideFlags: 0
@@ -3541,6 +3548,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   used: 0
   value: 1
+  id: 18
 --- !u!1 &615515653
 GameObject:
   m_ObjectHideFlags: 0
@@ -4427,6 +4435,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   used: 0
   value: 1
+  id: 15
 --- !u!1 &833998564
 GameObject:
   m_ObjectHideFlags: 0
@@ -8929,6 +8938,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   used: 0
   value: 1
+  id: 12
 --- !u!1 &1036731357
 GameObject:
   m_ObjectHideFlags: 0
@@ -9180,6 +9190,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   used: 0
   value: 1
+  id: 13
 --- !u!1 &1075408853
 GameObject:
   m_ObjectHideFlags: 0
@@ -10861,6 +10872,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   used: 0
   value: 1
+  id: 2
 --- !u!1 &1259900429
 GameObject:
   m_ObjectHideFlags: 0
@@ -11032,6 +11044,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   used: 0
   value: 1
+  id: 20
 --- !u!1 &1338359807
 GameObject:
   m_ObjectHideFlags: 0
@@ -11410,6 +11423,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   used: 0
   value: 1
+  id: 3
 --- !u!1 &1354911857
 GameObject:
   m_ObjectHideFlags: 0
@@ -12117,6 +12131,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   used: 0
   value: 1
+  id: 4
 --- !u!1 &1540053606
 GameObject:
   m_ObjectHideFlags: 0
@@ -12243,6 +12258,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   used: 0
   value: 1
+  id: 10
 --- !u!1 &1562989508
 GameObject:
   m_ObjectHideFlags: 0
@@ -12924,6 +12940,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   used: 0
   value: 1
+  id: 14
 --- !u!1 &1669397086
 GameObject:
   m_ObjectHideFlags: 0
@@ -13206,6 +13223,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   used: 0
   value: 1
+  id: 8
 --- !u!1 &1769666596
 GameObject:
   m_ObjectHideFlags: 0
@@ -13332,6 +13350,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   used: 0
   value: 1
+  id: 22
 --- !u!1 &1802136195
 GameObject:
   m_ObjectHideFlags: 0
@@ -14055,6 +14074,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   used: 0
   value: 1
+  id: 17
 --- !u!1 &1880927391
 GameObject:
   m_ObjectHideFlags: 0
@@ -14465,6 +14485,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   used: 0
   value: 1
+  id: 19
 --- !u!1 &1962930484
 GameObject:
   m_ObjectHideFlags: 0
@@ -31549,6 +31570,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   used: 0
   value: 1
+  id: 7
 --- !u!1 &2059932558
 GameObject:
   m_ObjectHideFlags: 0
@@ -31675,6 +31697,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   used: 0
   value: 1
+  id: 5
 --- !u!1 &2060749323
 GameObject:
   m_ObjectHideFlags: 0

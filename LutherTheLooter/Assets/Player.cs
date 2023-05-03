@@ -21,6 +21,7 @@ public class Player : MonoBehaviour
     [SerializeField] bool touchingCPU;
     [SerializeField] bool touchingLocked;
     [SerializeField] int score = 0;
+    [SerializeField] int id = -1;
 
     // Start is called before the first frame update
     void Start()
@@ -156,6 +157,7 @@ public class Player : MonoBehaviour
         }
         if (collision.gameObject.tag == "Furniture")
         {
+            id = collision.gameObject.GetComponent<Furniture>().id;
             touchedFurniture = collision.gameObject;
         }
     }
@@ -210,10 +212,15 @@ public class Player : MonoBehaviour
             touchingCPU = false;
             inputCode = "";
         }
-        if(collision.gameObject.tag=="Furniture")
+
+        if (collision.gameObject.tag == "Furniture"&&collision.gameObject.GetComponent<Furniture>().id==id)
         {
+            id = -1;
             touchedFurniture = null;
         }
+
+
+
     }
     private void FixedUpdate()
     {
