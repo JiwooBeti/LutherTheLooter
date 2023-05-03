@@ -11,14 +11,16 @@ public class Player : MonoBehaviour
     [SerializeField] bool touchingLadder;
     [SerializeField] GameObject touchedDoor;
     [SerializeField] bool upKey;
-    [SerializeField] GameObject touchedEscalator = null, touchedElevator = null, touchedComputer = null;
+    [SerializeField] GameObject touchedEscalator = null, touchedElevator = null, touchedComputer = null, touchedFurniture=null;
     [SerializeField] bool onElevator = false;
     [SerializeField] bool onEscalator = false;
-    [SerializeField] Text text;
+    [SerializeField] Text text, scoreText;
     [SerializeField] GameObject bigPaper;
     [SerializeField] bool oneDown, twoDown, threeDown, fourDown, fiveDown, sixDown, sevenDown, eightDown, nineDown, zeroDown;
     [SerializeField] string inputCode = "";
     [SerializeField] bool touchingCPU;
+    [SerializeField] bool touchingLocked;
+    [SerializeField] int score = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -148,9 +150,21 @@ public class Player : MonoBehaviour
             touchingCPU = true;
             text.text = "Enter Door Code: ";
         }
+        if(collision.gameObject.tag=="Locked")
+        {
+            touchingLocked = true;
+        }
+        if (collision.gameObject.tag == "Furniture")
+        {
+            touchedFurniture = collision.gameObject;
+        }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
+        if (collision.gameObject.tag == "Locked")
+        {
+            touchingLocked = false;
+        }
         if (collision.gameObject.tag == "ladder")
         {
             touchingLadder = false;
@@ -196,12 +210,25 @@ public class Player : MonoBehaviour
             touchingCPU = false;
             inputCode = "";
         }
+        if(collision.gameObject.tag=="Furniture")
+        {
+            touchedFurniture = null;
+        }
     }
     private void FixedUpdate()
     {
+        //Debug.Log(transform.position.y);
 
         animator.speed = 1;
-        if(touchingCPU&&computerButton)
+        if(upKey&&touchedFurniture!=null&&!touchedFurniture.GetComponent<Furniture>().used)
+        {
+            touchedFurniture.GetComponent<Furniture>().used = true;
+            score += touchedFurniture.GetComponent<Furniture>().GetValue();
+            scoreText.text = "Score: " + score;
+
+        }
+
+        if (touchingCPU&&computerButton)
         {
             bigPaper.SetActive(true);
             text.enabled = true;
@@ -281,10 +308,12 @@ public class Player : MonoBehaviour
         }
         
 
-        if(escalatorButton&&touchedEscalator!=null&&!onEscalator)
+        if(escalatorButton&&touchedEscalator!=null&&!onEscalator&&!touchingLocked)
         {
+            Debug.Log("Going to : " + touchedEscalator.GetComponent<Escalator>().getY());
             GetComponent<SpriteRenderer>().enabled = false;
             transform.position = new Vector2(transform.position.x, touchedEscalator.GetComponent<Escalator>().getY());
+            Debug.Log("Should be at : " + transform.position.y);
             onEscalator = true;
             escalatorButton = false;
             Invoke("showPlayer", 0.5f);
@@ -322,6 +351,7 @@ public class Player : MonoBehaviour
             {
                 touchedComputer.GetComponent<Computer>().Unlock();
                 inputCode = "";
+                touchingLocked = false;
             } else
             {
                 inputCode = "";
